@@ -1,23 +1,31 @@
-import { Injectable } from '@angular/core';
+import { CheckPlatformUtility } from '@/utilities';
+import { inject, Injectable } from '@angular/core';
 
 export enum localKeys {
-  token = "token"
+  token = 'token',
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class LocalManagerService {
-  static getElement(key: localKeys): string | null {
-    return localStorage.getItem(key)
+  checkPlatform = inject(CheckPlatformUtility);
+  getElement(key: localKeys): string | null {
+    if (this.checkPlatform.checkIfServer()) {
+      return null;
+    }
+    return localStorage.getItem(key);
   }
 
-  static setElement(key: localKeys, value: string): void {
-    localStorage.setItem(key, value)
+  setElement(key: localKeys, value: string): void {
+    if (this.checkPlatform.checkIfBrowser()) {
+      localStorage.setItem(key, value);
+    }
   }
 
-  static clearStorage(): void {
-    localStorage.clear()
+  clearStorage(): void {
+    if (this.checkPlatform.checkIfBrowser()) {
+      localStorage.clear();
+    }
   }
 }
