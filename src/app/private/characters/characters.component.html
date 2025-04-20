@@ -1,0 +1,7 @@
+@let characterList = characters();
+
+@if (characterList == undefined || characterList?.length === 0) {
+  <p>No characters Found</p>
+} @else {
+  <app-character-list [characters]="characterList" />
+}
