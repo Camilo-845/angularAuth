@@ -8,7 +8,7 @@ export const authGuard: CanActivateChildFn = () => {
   const router = inject(Router);
 
   const token = localManager.getElement(localKeys.token);
-  if (token) {
+  if (!token) {
     router.navigate([AppRoutes.public.login], { replaceUrl: true });
   }
 
