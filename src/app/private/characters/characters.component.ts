@@ -17,12 +17,10 @@ import { CharacterListComponent } from './components';
 })
 export class CharactersComponent {
   characterService = inject(CharacterService);
-  characters = computed(() =>
-    Array.from(this.characterService.state().characters).map((elem) => {
-      const [, value] = elem;
-      return value;
-    }),
-  );
+  characters = computed(() => {
+    const eventsMap = this.characterService.state().characters;
+    return Array.from(eventsMap.values());
+  });
 
   constructor() {
     this.characterService.getCharacters();
